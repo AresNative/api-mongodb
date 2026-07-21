@@ -7,7 +7,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Construir la URL base dinámicamente
   const protocol =
     req.headers["x-forwarded-proto"] === "https" ? "https" : "http";
-  const host = req.headers.host || "localhost:3000";
+  const host = req.headers.host || "localhost:3001";
   const baseUrl = `${protocol}://${host}`;
 
   // Definición OpenAPI 3.0.3

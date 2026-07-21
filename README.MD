@@ -24,7 +24,7 @@ Tu API queda en algo como `https://mongo-api-tuusuario.vercel.app`.
 vercel dev
 ```
 
-Esto levanta las funciones de `/api` en `http://localhost:3000` (o el puerto
+Esto levanta las funciones de `/api` en `http://localhost:3001` (o el puerto
 que te asigne), usando el `MONGODB_URI` que hayas puesto para `development`.
 
 ## Endpoints

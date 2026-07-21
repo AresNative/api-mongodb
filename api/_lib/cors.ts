@@ -3,7 +3,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 export function applyCors(req: VercelRequest, res: VercelResponse): boolean {
   // api/_lib/cors.ts
   const allowed =
-    process.env.ALLOWED_ORIGINS || "https://api-mongodb.mercadosliz.com, http://localhost:3000";
+    process.env.ALLOWED_ORIGINS || "https://api-mongodb.mercadosliz.com, http://localhost:3001";
   const origin = req.headers.origin as string | undefined;
   console.log("ALLOWED_ORIGINS:", process.env.ALLOWED_ORIGINS);
   if (allowed) {
