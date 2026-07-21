@@ -1,13 +1,21 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ]
   },
-  "include": ["api"]
+  "include": ["api"],
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "nodejs20.x",
+      "includeFiles": "api/**/*"
+    }
+  }
 }

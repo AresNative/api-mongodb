@@ -1,9 +1,9 @@
-import pusher, { notifyChange } from "../_lib/pusher";
+import pusher, { notifyChange } from "../_lib/pusher.js";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { ObjectId, Document } from "mongodb";
-import clientPromise from "../_lib/mongodb";
-import { applyCors } from "../_lib/cors";
-import { checkAuth } from "../_lib/auth";
+import clientPromise from "../_lib/mongodb.js";
+import { applyCors } from "../_lib/cors.js";
+import { checkAuth } from "../_lib/auth.js";
 
 // Nombres de colección válidos: letras, números, guion y guion bajo.
 const COLLECTION_NAME_RE = /^[a-zA-Z0-9_-]+$/;
