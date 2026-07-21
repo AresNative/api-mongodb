@@ -8,6 +8,7 @@ export function applyCors(req: VercelRequest, res: VercelResponse): boolean {
     const list = allowed.split(",").map((o) => o.trim());
     if (origin && list.includes(origin)) {
       res.setHeader("Access-Control-Allow-Origin", origin);
+      res.setHeader("Access-Control-Allow-Credentials", "true");
     }
   } else {
     res.setHeader("Access-Control-Allow-Origin", "*");
