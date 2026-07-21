@@ -1,9 +1,11 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 export function applyCors(req: VercelRequest, res: VercelResponse): boolean {
-  const allowed = process.env.ALLOWED_ORIGINS;
+  // api/_lib/cors.ts
+  const allowed =
+    process.env.ALLOWED_ORIGINS || "https://api-mongodb.mercadosliz.com, http://localhost:3000";
   const origin = req.headers.origin as string | undefined;
-
+  console.log("ALLOWED_ORIGINS:", process.env.ALLOWED_ORIGINS);
   if (allowed) {
     const list = allowed.split(",").map((o) => o.trim());
     if (origin && list.includes(origin)) {
@@ -14,7 +16,10 @@ export function applyCors(req: VercelRequest, res: VercelResponse): boolean {
     res.setHeader("Access-Control-Allow-Origin", "*");
   }
 
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS",
+  );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-API-Key");
 
   if (req.method === "OPTIONS") {
