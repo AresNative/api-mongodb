@@ -1,10 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-// ALLOWED_ORIGINS: opcional, lista separada por comas
-// (ej: "https://mi-app-ionic.vercel.app,https://mi-blog-astro.com").
-// Si no se define, se permite cualquier origen ("*") — cómodo para
-// desarrollar/prototipar rápido con varios sitios, pero considera
-// restringirlo cuando tengas dominios de producción definidos.
 export function applyCors(req: VercelRequest, res: VercelResponse): boolean {
   const allowed = process.env.ALLOWED_ORIGINS;
   const origin = req.headers.origin as string | undefined;

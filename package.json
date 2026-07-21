@@ -7,11 +7,12 @@
     "deploy": "vercel --prod"
   },
   "dependencies": {
-    "mongodb": "^6.10.0"
+    "mongodb": "^6.10.0",
+    "pusher": "^5.3.4"
   },
   "devDependencies": {
     "@vercel/node": "^3.2.0",
     "typescript": "^5.6.0",
-    "vercel": "^37.0.0"
+    "vercel": "^56.4.1"
   }
 }

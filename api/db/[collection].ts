@@ -1,9 +1,4 @@
-// api/db/[collection].ts
-// → GET    /api/db/messages?chatId=xxx        (lista filtrando por query params)
-// → GET    /api/db/messages?id=507f1f77...    (uno solo por id)
-// → POST   /api/db/messages   { ...campos }   (crea)
-// → PUT    /api/db/messages?id=507f1f77...    (actualiza, body = campos a cambiar)
-// → DELETE /api/db/messages?id=507f1f77...    (borra)
+import pusher, { notifyChange } from "../_lib/pusher";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { ObjectId, Document } from "mongodb";
 import clientPromise from "../_lib/mongodb";
@@ -54,6 +49,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       case "POST": {
         const body = req.body || {};
         const result = await col.insertOne({ ...body, createdAt: new Date() });
+        await notifyChange(
+          collection,
+          "created",
+          result.insertedId.toString(),
+          body,
+        );
         return res.status(201).json({ id: result.insertedId.toString() });
       }
 
@@ -62,9 +63,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(400).json({ error: "id requerido y válido" });
         }
         const body = req.body || {};
+         const updatedDoc = await col.findOne({ _id: new ObjectId(id) });
         await col.updateOne(
           { _id: new ObjectId(id) },
           { $set: { ...body, updatedAt: new Date() } },
+        );
+        await notifyChange(
+          collection,
+          "updated",
+          id,
+          updatedDoc ? toEntity(updatedDoc) : null,
         );
         return res.status(204).end();
       }
@@ -73,7 +81,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (typeof id !== "string" || !ObjectId.isValid(id)) {
           return res.status(400).json({ error: "id requerido y válido" });
         }
+         const deletedDoc = await col.findOne({ _id: new ObjectId(id) });
         await col.deleteOne({ _id: new ObjectId(id) });
+
+        await notifyChange(
+          collection,
+          "deleted",
+          id,
+          deletedDoc ? toEntity(deletedDoc) : null,
+        );
         return res.status(204).end();
       }
 
