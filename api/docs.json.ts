@@ -18,7 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     servers: [
       {
         url: process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}`
+          ? process.env.VERCEL_URL
           : "http://localhost:3000",
         description: "Servidor actual (local o Vercel)",
       },
